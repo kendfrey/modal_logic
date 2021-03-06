@@ -16,5 +16,6 @@ instance [world] : is_trans World (≺) := ⟨λ w v u h h', trivial⟩
 instance [world] : is_dense World (≺) := ⟨λ w v h, ⟨w, trivial, trivial⟩⟩
 instance [world] : is_serial World (≺) := ⟨λ w, ⟨w, trivial⟩⟩
 instance [world] : is_symm World (≺) := ⟨λ w v h, trivial⟩
+instance [world] : is_euclidean World (≺) := ⟨λ w v u h h', trivial⟩
 
 end modal_logic.universal

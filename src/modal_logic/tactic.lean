@@ -35,9 +35,6 @@ meta def m.apply : parse texpr → tactic unit := λ h,
     | _ := `[apply %%h] -- This fails with a decent enough error message
     end
 
-meta def m.apply_nec : parse texpr → parse (tk "using") → parse texpr → tactic unit := λ h _ h_v,
-  `[refine ((sat_nec _ _).mp %%h _ %%h_v)]
-
 -- This is a hack to get `cases` to unpack `∃ x, P x ∧ Q x` in a single step.
 inductive exists_triple (α : Sort*) (p : α → Prop) (q : α → Prop) : Prop
 | intro (x : α) : p x → q x → exists_triple
@@ -153,14 +150,6 @@ begin
   m.apply h,
   m.apply h',
 end
-
--- tests apply_nec
-example : w ⊩ □p ⇒ □p :=
-begin
-  m.intros h v h_v,
-  m.apply_nec h using h_v,
-end
-
 
 -- tests cases with and
 example : w ⊩ (p ∧ q) ⇒ p :=
