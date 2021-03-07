@@ -67,6 +67,8 @@ instance [modal_model] : modal_prop MProp := modal_model.modal_prop
 instance [modal_model] : has_acc World := modal_model.has_acc
 instance [modal_model] : modal_logic World MProp := modal_model.modal_logic
 
+section
+
 variables [modal_model : modal_model] (w : World) (p q : MProp)
 
 lemma sat_not : w ⊩ ¬p ↔ ¬(w ⊩ p) := modal_logic.sat_not w p
@@ -83,5 +85,16 @@ lemma sat_poss : w ⊩ ◇p ↔ ∃ v, w ≺ v ∧ (v ⊩ p) :=
   by simp only [modal_prop.poss, exists_prop, sat_nec, sat_not, not_not, not_forall]
 
 lemma sat_iff : w ⊩ p ⇔ q ↔ w ⊩ p ⇒ q ∧ q ⇒ p := iff.refl _
+
+end
+
+instance imp_to_fun [modal_model] {w : World} {p q : MProp} : has_coe_to_fun (w ⊩ p ⇒ q) :=
+  ⟨λ _, w ⊩ p → w ⊩ q, by simp only [sat_imp, imp_self]⟩
+
+instance nec_to_fun [modal_model] {w : World} {p : MProp} : has_coe_to_fun (w ⊩ □p) :=
+  ⟨λ _, ∀ v, w ≺ v → v ⊩ p, by simp only [sat_nec]; intros h; apply h⟩
+
+instance not_to_fun [modal_model] {w : World} {p : MProp} : has_coe_to_fun (w ⊩ ¬p) :=
+  ⟨λ _, ¬(w ⊩ p), by simp only [sat_not, imp_self]⟩
 
 end modal_logic

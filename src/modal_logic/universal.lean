@@ -13,9 +13,9 @@ localized "attribute [instance] modal_logic.universal.has_acc" in modal_frame.un
 
 instance [world] : is_refl World (≺) := ⟨λ w, trivial⟩
 instance [world] : is_trans World (≺) := ⟨λ w v u h h', trivial⟩
-instance [world] : is_dense World (≺) := ⟨λ w v h, ⟨w, trivial, trivial⟩⟩
-instance [world] : is_serial World (≺) := ⟨λ w, ⟨w, trivial⟩⟩
 instance [world] : is_symm World (≺) := ⟨λ w v h, trivial⟩
-instance [world] : is_euclidean World (≺) := ⟨λ w v u h h', trivial⟩
+instance [world] : is_preorder World (≺) := ⟨⟩
+instance [world] : is_equiv World (≺) := ⟨⟩
+instance [world] : is_per World (≺) := ⟨⟩
 
 end modal_logic.universal
