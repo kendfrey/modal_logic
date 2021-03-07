@@ -5,17 +5,19 @@ import modal_logic.axioms
 
 open modal_logic
 
-namespace modal_logic.universal
+namespace modal_logic
 
-def has_acc [world] : has_acc World := ⟨λ w v, true⟩
-
+def universal.has_acc [world] : has_acc World := ⟨λ w v, true⟩
 localized "attribute [instance] modal_logic.universal.has_acc" in modal_frame.universal
 
-instance [world] : is_refl World (≺) := ⟨λ w, trivial⟩
-instance [world] : is_trans World (≺) := ⟨λ w v u h h', trivial⟩
-instance [world] : is_symm World (≺) := ⟨λ w v h, trivial⟩
-instance [world] : is_preorder World (≺) := ⟨⟩
-instance [world] : is_equiv World (≺) := ⟨⟩
-instance [world] : is_per World (≺) := ⟨⟩
+def universal_frame [world] : modal_frame := ⟨⟩
+localized "attribute [instance] modal_logic.universal_frame" in modal_frame.universal
 
-end modal_logic.universal
+instance [modal_frame] : is_refl World (≺) := ⟨λ w, trivial⟩
+instance [modal_frame] : is_trans World (≺) := ⟨λ w v u h h', trivial⟩
+instance [modal_frame] : is_symm World (≺) := ⟨λ w v h, trivial⟩
+instance [modal_frame] : is_preorder World (≺) := ⟨⟩
+instance [modal_frame] : is_equiv World (≺) := ⟨⟩
+instance [modal_frame] : is_per World (≺) := ⟨⟩
+
+end modal_logic
