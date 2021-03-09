@@ -7,10 +7,8 @@ open modal_logic
 open_locale modal_frame.universal
 
 constant object : Type
-constant α : Type
-noncomputable instance world : world := ⟨α⟩
 
-variables (w : World) (p q : object → MProp)
+variables [world.{0}] (w : World) (p q : object → MProp)
 
 constant ex (x : object) : MProp
 constant pos : (object → MProp) → MProp
@@ -94,6 +92,16 @@ theorem god_nec_ex : ∃ x, w ⊩ ex x ∧ godlike x :=
 begin
   rcases exists_godlike w with ⟨v, h_v, x, h, h'⟩,
   apply h' _ (pos_nec_ex _) _ (ess_godlike _ _ h h') w trivial,
+end
+
+theorem modal_collapse (w v : World) : w = v :=
+begin
+  rcases god_nec_ex w with ⟨god_w, -, h⟩,
+  rcases god_nec_ex v with ⟨god_v, -, h'⟩,
+  apply h' (λ _ u, w = u),
+  apply nec_pos_of_pos w _ _ v trivial,
+  apply pos_of_godlike _ _ _ h,
+  apply rfl,
 end
 
 end ontological_argument
